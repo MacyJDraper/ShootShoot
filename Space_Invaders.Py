@@ -13,7 +13,7 @@ x_coordinate = 50
 y_coordinate = 100
 
 def handle_events():
-    globa x_coordinate, y_coordinate, is_playing
+    global x_coordinate, y_coordinate, is_playing
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_playing = False
