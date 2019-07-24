@@ -2,6 +2,9 @@
 # Choose an interpreter that works
 import pygame
 
+# MediaFiles
+player_image = pygame.image.load('si-player.gif')
+
 pygame.init()
 clock = pygame.time.Clock()
 game_display = pygame.display.set_mode((400, 600))
@@ -9,8 +12,8 @@ score_font = pygame.font.SysFont('Arial', 22, True)
 title_font = pygame.font.SysFont('Arial', 26, True)
 pygame.display.set_caption('SPACE INVADERS!')
 
-x_coordinate = 50
-y_coordinate = 100
+x_coordinate = 200
+y_coordinate = 575
 
 def handle_events():
     global x_coordinate, y_coordinate, is_playing
@@ -33,7 +36,7 @@ while is_playing:
     game_display.blit(game_display, (0, 0))
 
     game_display.fill((0, 0, 0))
-    pygame.draw.rect(game_display, (0,255, 0), pygame.Rect(x_coordinate,y_coordinate, 20, 20))
+    game_display.blit(player_image, (x_coordinate, y_coordinate))
     # score_text = score_font.render(str(snake.score),False,(255,255,255))
     # game_display.blit(score_text, (0,0))
 
