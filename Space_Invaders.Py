@@ -21,7 +21,7 @@ def handle_events():
             if event.key == pygame.K_LEFT:
                 x_coordinate -= 10
             elif event.key == pygame.K_RIGHT:
-                y_coordinate += 10
+                x_coordinate += 10
 
 
 # main game loop
