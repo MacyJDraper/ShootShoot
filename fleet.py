@@ -4,7 +4,7 @@ class Fleet():
     def __init__(self, row_count, column_count, initial_speed, enemy_img, starting_xcor, starting_ycor ):
         self.direction = 1
         self.speed = initial_speed
-        self.ships = self.get_initial_ships(row_count, column_count, enemy_img, starting_xcor,starting_ycor)
+        self.ships = self.get_initial_ships(row_count, column_count, enemy_img, starting_xcor, starting_ycor)
     
     def get_initial_ships(self, row_count, column_count, enemy_img, starting_xcor, starting_ycor):
         initial_ships = []
@@ -15,20 +15,25 @@ class Fleet():
                 initial_ships.append(Enemy(enemy_img, current_xcor, current_ycor))
         return initial_ships
     
-    def move_over(self, left_wall, right_wall):
+    def show(self, game_display):
+        for ship in self.ships:
+            ship.show(game_display)
+
+    def Handle_wall_collision(self, left_wall, right_wall):
         for ship in self.ships:
             if ship.has_collided_with_left_wall(left_wall) or ship.has_collided_with_right_wall(right_wall):
-                ship.move_down()
+                self.move_down()
                 self.change_direction()
                 break
-        for ship in self.ships:
-            ship.xcor += ship.direction * self.speed
 
-    def move_down(self):
+    def move_down(self): 
         for ship in self.ships:
             ship.move_down(10)
-   
+           
     def change_direction(self):
+        self.direction *= -1
+
+    def move_over(self):
         for ship in self.ships:
-            ship.direction *= -1
+            ship.mov_over(self.direction * self.speed)
     

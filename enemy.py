@@ -5,8 +5,8 @@ class Enemy():
         self.img = image  
         self.xcor = x_coordinate
         self.ycor = y_coordinate
-        self.direction = 1
         self.width = image.get_width()
+        self.Height = image.get_height()
     
     def show(self, game_display):
         game_display.blit(self.img, (self.xcor, self.ycor))
@@ -17,6 +17,9 @@ class Enemy():
     def has_collided_with_left_wall(self, left_wall_x_location):
         return self.xcor <= left_wall_x_location
     
+    def mov_over(self, amount_to_move):
+        self.xcor += amount_to_move
+    
     def move_down(self, amount_to_move):
-        self.ycor = += amount_to_move
+        self.ycor += amount_to_move
         

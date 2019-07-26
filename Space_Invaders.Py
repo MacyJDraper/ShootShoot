@@ -2,7 +2,7 @@
 # Choose an interpreter that works
 import pygame
 from hero import Hero
-from enemy  import Enemy
+from fleet  import Fleet
 
 # GameSettings
 WINDOW_WIDTH = 400
@@ -52,10 +52,7 @@ def handle_events():
 
 hero = Hero(player_image, 200, GAME_BOTTOM_WALL - player_image.get_height())
 
-enemies = []
-enemies.append(Enemy(enemy_image, 25, 25))
-enemies.append(Enemy(enemy_image, 50, 25))
-enemies.append(Enemy(enemy_image, 75, 25))
+fleet = Fleet(3, 5, 4, enemy_image, GAME_LEFT_WALL + 1, GAME_TOP_WALL +1)
 
 # main game loop
 while hero.is_alive:
@@ -64,27 +61,12 @@ while hero.is_alive:
 
     hero.move(GAME_LEFT_WALL, GAME_RIGHT_WALL)
 
-    # Move each enemy down and change direction if it has hit a wall
-    for enemy in enemies:
-        if enemy.has_collided_with_left_wall(GAME_LEFT_WALL):
-            #Move all enemies down and change all their directions
-            for e in enemies:
-                e.ycor += 10
-                e.direction = 1
-            break
-        if enemy.has_collided_with_right_wall(GAME_RIGHT_WALL):
-            #Move all enemies down and change all their directions
-            for e in enemies:
-                e.ycor += 10
-                e.direction = -1
-            break
-        
-   # Move each enemy over based on its direction
-    for enemy in enemies:
-       enemy.xcor += 4 * enemy.direction
+    fleet.Handle_wall_collision(GAME_LEFT_WALL, GAME_RIGHT_WALL)
 
+    fleet.move_over()
+   
     game_display.blit(game_display, (0, 0))
-
+    
     game_display.fill(BLACK)
 
     pygame.draw.rect(game_display, WHITE, \
@@ -98,10 +80,9 @@ while hero.is_alive:
                     WINDOW_HEIGHT - GAME_TOP_WALL - GAME_BOTTOM_MARGIN - GAME_BORDER_WIDTH))
 
     hero.show(game_display)
-    
-    for enemy in enemies:
-        enemy.show(game_display)
 
+    fleet.show(game_display)
+    
     for bullet in hero.bullets_fired:
         if bullet.has_collided_with_top_wall(GAME_TOP_WALL):
             bullet.is_alive = False
